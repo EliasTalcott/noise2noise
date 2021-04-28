@@ -42,7 +42,7 @@ optimizer_config = dnnlib.EasyDict(beta1=0.9, beta2=0.99, epsilon=1e-8)
 gaussian_noise_config = dnnlib.EasyDict(
     func_name='train.AugmentGaussian',
     train_stddev_rng_range=(0.0, 50.0),
-    validation_stddev=25.0
+    validation_stddev=float(sys.argv[5].split("=")[1])
 )
 poisson_noise_config = dnnlib.EasyDict(
     func_name='train.AugmentPoisson',
@@ -198,6 +198,7 @@ if __name__ == "__main__":
     parser_validate.add_argument('--dataset-dir', help='Load all images from a directory (*.png, *.jpg/jpeg, *.bmp)')
     parser_validate.add_argument('--network-snapshot', help='Trained network pickle')
     parser_validate.add_argument('--noise', default='gaussian', help='Type of noise corruption (one of: gaussian, poisson)')
+    parser_validate.add_argument('--stddev', default=25.0, help='Standard deviation for Gaussian noise')
     parser_validate.set_defaults(func=validate)
 
     parser_infer_image = subparsers.add_parser('infer-image', help='Run one image through the network without adding any noise')
