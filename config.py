@@ -42,7 +42,7 @@ optimizer_config = dnnlib.EasyDict(beta1=0.9, beta2=0.99, epsilon=1e-8)
 gaussian_noise_config = dnnlib.EasyDict(
     func_name='train.AugmentGaussian',
     train_stddev_rng_range=(0.0, 50.0),
-    validation_stddev=float(sys.argv[5].split("=")[1])
+    validation_stddev=float(sys.argv[6].split("=")[1])
 )
 poisson_noise_config = dnnlib.EasyDict(
     func_name='train.AugmentPoisson',
