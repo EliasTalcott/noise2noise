@@ -192,6 +192,7 @@ if __name__ == "__main__":
     parser_train.add_argument('--noise', default='gaussian', help='Type of noise corruption (one of: gaussian, poisson)')
     parser_train.add_argument('--long-train', default=False, help='Train for a very long time (500k iterations or 500k*minibatch image)')
     parser_train.add_argument('--train-tfrecords', help='Filename of the training set tfrecords file')
+    parser_train.add_argument('--stddev', default=25.0, help='Standard deviation for Gaussian noise')
     parser_train.set_defaults(func=train)
 
     parser_validate = subparsers.add_parser('validate', help='Run a set of images through the network')
@@ -205,6 +206,7 @@ if __name__ == "__main__":
     parser_infer_image.add_argument('--image', help='Image filename')
     parser_infer_image.add_argument('--out', help='Output filename')
     parser_infer_image.add_argument('--network-snapshot', help='Trained network pickle')
+    parser_infer_image.add_argument('--stddev', default=25.0, help='Standard deviation for Gaussian noise')
     parser_infer_image.set_defaults(func=infer_image)
 
     args = parser.parse_args()
