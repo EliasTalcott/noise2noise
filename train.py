@@ -5,6 +5,7 @@
 # http://creativecommons.org/licenses/by-nc/4.0/ or send a letter to
 # Creative Commons, PO Box 1866, Mountain View, CA 94042, USA.
 
+import sys
 import tensorflow as tf
 import numpy as np
 
@@ -29,10 +30,10 @@ class AugmentGaussian:
         (minval,maxval) = self.train_stddev_range
         shape = tf.shape(x)
         rng_stddev = tf.random_uniform(shape=[1, 1, 1], minval=minval/255.0, maxval=maxval/255.0)
-        return x + tf.random_normal(shape) * rng_stddev
+        return x + tf.random_normal(shape=shape, mean=float(sys.argv[7].split("=")[1])) * rng_stddev
 
     def add_validation_noise_np(self, x):
-        return x + np.random.normal(size=x.shape)*(self.validation_stddev/255.0)
+        return x + np.random.normal(size=x.shape, loc=float(sys.argv[7].split("=")[1]))*(self.validation_stddev/255.0)
 
 class AugmentPoisson:
     def __init__(self, lam_max):

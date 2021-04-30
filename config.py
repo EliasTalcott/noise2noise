@@ -53,11 +53,11 @@ poisson_noise_config = dnnlib.EasyDict(
 # Preconfigured validation sets
 datasets = {
     'kodak':  dnnlib.EasyDict(dataset_dir='datasets/kodak'),
-    'bsd300': dnnlib.EasyDict(dataset_dir='datasets/bsd300'),
+    'bsd300': dnnlib.EasyDict(dataset_dir='../datasets/images/test'),
     'set14':  dnnlib.EasyDict(dataset_dir='datasets/set14')
 }
 
-default_validation_config = datasets['kodak']
+default_validation_config = datasets['bsd300']
 
 corruption_types = {
     'gaussian': gaussian_noise_config,
@@ -122,8 +122,8 @@ if __name__ == "__main__":
             n2n = args.noise2noise if 'noise2noise' in args else True
             train_config.noise2noise = n2n
             if 'long_train' in args and args.long_train:
-                train_config.iteration_count = 500000
-                train_config.eval_interval = 5000
+                train_config.iteration_count = 10000
+                train_config.eval_interval = 1000
                 train_config.ramp_down_perc = 0.5
         else:
             print ('running with defaults in train_config')
@@ -200,6 +200,7 @@ if __name__ == "__main__":
     parser_validate.add_argument('--network-snapshot', help='Trained network pickle')
     parser_validate.add_argument('--noise', default='gaussian', help='Type of noise corruption (one of: gaussian, poisson)')
     parser_validate.add_argument('--stddev', default=25.0, help='Standard deviation for Gaussian noise')
+    parser_validate.add_argument('--mean', default=0.0, help='Mean of Gaussian noise')
     parser_validate.set_defaults(func=validate)
 
     parser_infer_image = subparsers.add_parser('infer-image', help='Run one image through the network without adding any noise')
